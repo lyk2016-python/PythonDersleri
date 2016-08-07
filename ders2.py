@@ -1,7 +1,11 @@
-kelimeler = ["vantilatör", "adaptör", "kalem", "fare", "telefon", "kulaklık"]
+import json
+import os
+
+kelimeler = ["vantilatör", "adaptör", "kalem", "fare", "telefon", "kulaklık", "pervane", "merdane", "kestane"]
 
 
 def oyun_hazirlik():
+    """Oyun için gerekli değişkenleri tanımöar"""
     global secilen_kelime, gorunen_kelime, can
     import random
     secilen_kelime = random.choice(kelimeler)
@@ -10,6 +14,7 @@ def oyun_hazirlik():
 
 
 def harf_al():
+    """Kullanıcıdan bir harf alır, alana kadar gerekirse hata verir, birisi quit yazarsa programı kapatır"""
     devam = True
     while devam:
         harf = input("Bir harf giriniz: ")
@@ -25,6 +30,8 @@ def harf_al():
 
 
 def oyun_dongusu():
+    """Oyunun ana döngüsü, harf alır, tutarsa görünen karakterler listesi güncellenir,
+     tutmazsa can azaltılır, ve bu can bitene kadar ya da kelime bilinene kadar devam eder..."""
     global gorunen_kelime, can
     while can > 0 and secilen_kelime != "".join(gorunen_kelime):
         print("".join(gorunen_kelime))
@@ -40,6 +47,7 @@ def oyun_dongusu():
 
 
 def harf_kontrol(girilen_harf):
+    """Gelen harfin seçilen kelimede nerelerde olduğunu bulur"""
     poz = []
     for index, h in enumerate(secilen_kelime):
         if h == girilen_harf:
@@ -47,15 +55,38 @@ def harf_kontrol(girilen_harf):
     return poz
 
 
-def oyun_sonucu():
+def oyun_sonucu():  # TODO geliştirilecek
+    """Oyun bittiğinde kazanıp kazanamadığımızı ekrana yazar."""
     if can > 0:
         print("Kazandınız")
     else:
         print("Kaybettiniz")
 
 
+def dosyay_kontrol_et_yoksa_olustur():
+    """Ayar dosyası var mı kontrol eder, varsa sağlam mı diye bakar,
+    bozuk ya da olmayan durum için dosyayı öntanımlı değerlerle oluşturur"""
+    yaz = False
+    if os.path.exists("ayarlar.json"):
+        with open("ayarlar.json") as f:
+            try:
+                json.load(f)
+            except ValueError as e:
+                print("Hata: ValueError(" + ",".join(e.args) + ")")
+                os.remove("ayarlar.json")
+                yaz = True
+    else:
+        yaz = True
+
+    if yaz:
+        with open("ayarlar.json", "w") as f:
+            json.dump({"skorlar": [], "son_kullanan": ""}, f)
+
+
 def main():
+    """Programın ana döngüsü, oyunun çalışmasından yükümlü"""
     tekrar_edecek_mi = True
+    dosyay_kontrol_et_yoksa_olustur()
     while tekrar_edecek_mi:
         oyun_hazirlik()
         oyun_dongusu()
