@@ -1,5 +1,7 @@
 def lavas(fonksyon):
+    """Gelen fonksyonu alıp onun yerine _sarma_islemi fonksyonunu döndürür. Asıl işi _sarma_islemi yapar."""
     def _sarma_islemi(*args, **kwargs):
+        """Argümanları alır, integer olmayanlara hata verir, etrafını sardığı fonksyonun durumunu ekrana yazar"""
         for a in args:
             if type(a) not in (int, float):
                 raise TypeError(fonksyon.__code__.co_name + " isimli fonksyon sadece sayı alır,"
@@ -13,16 +15,19 @@ def lavas(fonksyon):
 
 @lavas
 def ortalama(*args):
+    """Aritmetik ortalama alır"""
     return sum(args) / len(args)
 
 
 @lavas
 def toplama(*args):
+    """Değerleri toplar"""
     return sum(args)
 
 
 @lavas
 def geometrik_ortalama(*args):
+    """Geometrik ortalama alır (n1*n2*...nn)**(1/n)"""
     sonuc = 1
     for sayi in args:
         sonuc *= sayi
