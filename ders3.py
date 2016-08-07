@@ -1,5 +1,6 @@
 def lavas(fonksyon):
     """Gelen fonksyonu alıp onun yerine _sarma_islemi fonksyonunu döndürür. Asıl işi _sarma_islemi yapar."""
+
     def _sarma_islemi(*args, **kwargs):
         """Argümanları alır, integer olmayanlara hata verir, etrafını sardığı fonksyonun durumunu ekrana yazar"""
         for a in args:
@@ -12,6 +13,7 @@ def lavas(fonksyon):
         return sonuc
 
     return _sarma_islemi
+
 
 @lavas
 def ortalama(*args):
@@ -31,12 +33,12 @@ def geometrik_ortalama(*args):
     sonuc = 1
     for sayi in args:
         sonuc *= sayi
-    return sonuc ** (1/len(args))
+    return sonuc ** (1 / len(args))
+
 
 ortalama_sonuc = ortalama(4, 8, 15, 16, 23, 42)
 toplama_sonuc = toplama(4, 8, 15, 16, 23, 42)
 geometrik_ortalama_sonuc = geometrik_ortalama(4, 8, 15, 16, 23, 42)
-
 
 print(ortalama_sonuc)
 print(toplama_sonuc)
