@@ -125,7 +125,7 @@ def kullanici_adini_guncelle():
     """Kullanıcıdan isim alıp ayarlara yazdırmaya gönderir"""
     veri = ayar_oku()
     veri["son_kullanan"] = input("Kullanıcı Adınız: ")
-    while not veri["son_kullanan"] or len(veri["son_kullanan"]) < 9:
+    while not veri["son_kullanan"] or len(veri["son_kullanan"]) > 9:
         veri["son_kullanan"] = input("1 ile 9 karakter uzunluğunda yazın: ")
     ayar_yaz(veri)
 
