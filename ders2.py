@@ -1,6 +1,12 @@
 import json
 import os
 
+try:
+    from termcolor import cprint
+except ImportError:
+    def cprint(*args, **kwargs):
+        print(*args)
+
 kelimeler = ["vantilatör", "adaptör", "kalem", "fare", "telefon", "kulaklık", "pervane", "merdane", "kestane"]
 
 
@@ -19,12 +25,12 @@ def harf_al():
     while devam:
         harf = input("Bir harf giriniz: ")
         if harf.lower() == "quit":
-            print("Gidiyor gönlümün efendisi...")
+            cprint("Gidiyor gönlümün efendisi...", color="red", on_color="on_blue")
             exit()
         elif len(harf) == 1 and harf.isalpha() and harf not in gorunen_kelime:
             devam = False
         else:
-            print("Hatalı Giriş")
+            cprint("Hatalı Giriş", color="red", on_color="on_grey")
 
     # noinspection PyUnboundLocalVariable
     return harf.lower()
@@ -35,8 +41,8 @@ def oyun_dongusu():
      tutmazsa can azaltılır, ve bu can bitene kadar ya da kelime bilinene kadar devam eder..."""
     global gorunen_kelime, can
     while can > 0 and secilen_kelime != "".join(gorunen_kelime):
-        print("kelime: " + "".join(gorunen_kelime))
-        print("can   : <" + "❤" * can + " " * (5 - can) + ">")
+        cprint("kelime: " + "".join(gorunen_kelime), color="cyan", attrs=["bold"])
+        cprint("can   : <" + "❤" * can + " " * (5 - can) + ">", color="cyan", attrs=["bold"])
 
         girilen_harf = harf_al()
         pozisyonlar = harf_kontrol(girilen_harf)
@@ -59,11 +65,11 @@ def harf_kontrol(girilen_harf):
 def skor_tablosunu_goster():
     """Skor tablosunu gösterir"""
     veri = ayar_oku()
-    print("|Skor\t\tKullanıcı|")
-    print("|--------------------|")
+    cprint("|Skor\t\tKullanıcı|", color="white", on_color="on_grey")
+    cprint("|------------------------|", color="white", on_color="on_grey")
     for skor, kullanici in veri["skorlar"]:
-        print("|"+str(skor) +"\t\t\t"+ kullanici+" "*(9-len(kullanici))+"|")
-    print("|--------------------|")
+        cprint("|"+str(skor) +"\t\t"+ kullanici+" "*(9-len(kullanici))+"|", color="white", on_color="on_grey")
+    cprint("|------------------------|", color="white", on_color="on_grey")
 
 
 def skor_tablosunu_guncelle():
@@ -78,10 +84,10 @@ def skor_tablosunu_guncelle():
 def oyun_sonucu():
     """Oyun bittiğinde kazanıp kazanamadığımızı ekrana yazar."""
     if can > 0:
-        print("Kazandınız")
+        cprint("Kazandınız", color="yellow", on_color="on_red")
         skor_tablosunu_guncelle()
     else:
-        print("Kaybettiniz")
+        cprint("Kaybettiniz", color="red", on_color="on_yellow")
     skor_tablosunu_goster()
 
 
@@ -93,7 +99,7 @@ def dosyay_kontrol_et_yoksa_olustur():
         try:
             ayar_oku()
         except ValueError as e:
-            print("Hata: ValueError(" + ",".join(e.args) + ")")
+            cprint("Hata: ValueError(" + ",".join(e.args) + ")", color="red", on_color="on_blue", attrs=["bold"])
             os.remove("ayarlar.json")
             yaz = True
     else:
@@ -138,9 +144,9 @@ def main():
     """Programın ana döngüsü, oyunun çalışmasından yükümlü"""
     tekrar_edecek_mi = True
     dosyay_kontrol_et_yoksa_olustur()
-    print("Merhaba, Adam Asmacaya hoşgeldiniz.")
-    print("Yardım: Oyun sırasında quit diyerek çıkabilirsiniz")
-    print("-"*30)
+    cprint("Merhaba, Adam Asmacaya hoşgeldiniz.", color="cyan", on_color="on_magenta", attrs=["bold"])
+    cprint("Yardım: Oyun sırasında quit diyerek çıkabilirsiniz", color="cyan", on_color="on_magenta", attrs=["bold"])
+    cprint("-"*30, color="cyan", on_color="on_magenta", attrs=["bold"])
     skor_tablosunu_goster()
     kullanici_kontrol()
     while tekrar_edecek_mi:
@@ -149,7 +155,7 @@ def main():
         oyun_sonucu()
         if input("Devam?(e/h) ").lower() == "h":
             tekrar_edecek_mi = False
-    print("Gidiyor gönlümün efendisi...")
+    cprint("Gidiyor gönlümün efendisi...", color="red", on_color="on_blue")
 
 
 main()
