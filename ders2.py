@@ -19,6 +19,7 @@ def harf_al():
     while devam:
         harf = input("Bir harf giriniz: ")
         if harf.lower() == "quit":
+            print("Gidiyor gönlümün efendisi...")
             exit()
         elif len(harf) == 1 and harf.isalpha() and harf not in gorunen_kelime:
             devam = False
@@ -34,8 +35,8 @@ def oyun_dongusu():
      tutmazsa can azaltılır, ve bu can bitene kadar ya da kelime bilinene kadar devam eder..."""
     global gorunen_kelime, can
     while can > 0 and secilen_kelime != "".join(gorunen_kelime):
-        print("".join(gorunen_kelime))
-        print("can: " + str(can))
+        print("kelime: " + "".join(gorunen_kelime))
+        print("can   : <" + "❤" * can + " " * (5 - can) + ">")
 
         girilen_harf = harf_al()
         pozisyonlar = harf_kontrol(girilen_harf)
@@ -55,12 +56,33 @@ def harf_kontrol(girilen_harf):
     return poz
 
 
-def oyun_sonucu():  # TODO geliştirilecek
+def skor_tablosunu_goster():
+    """Skor tablosunu gösterir"""
+    veri = ayar_oku()
+    print("|Skor\t\tKullanıcı|")
+    print("|--------------------|")
+    for skor, kullanici in veri["skorlar"]:
+        print("|"+str(skor) +"\t\t\t"+ kullanici+" "*(9-len(kullanici))+"|")
+    print("|--------------------|")
+
+
+def skor_tablosunu_guncelle():
+    """Skor tablosunu son kullanıcının ismiyle ve skoruyla günceller"""
+    veri = ayar_oku()
+    veri["skorlar"].append((can, veri["son_kullanan"]))
+    veri["skorlar"].sort(key=lambda skor_tuplei: skor_tuplei[0], reverse=True)
+    veri["skorlar"] = veri["skorlar"][:5]
+    ayar_yaz(veri)
+
+
+def oyun_sonucu():
     """Oyun bittiğinde kazanıp kazanamadığımızı ekrana yazar."""
     if can > 0:
         print("Kazandınız")
+        skor_tablosunu_guncelle()
     else:
         print("Kaybettiniz")
+    skor_tablosunu_goster()
 
 
 def dosyay_kontrol_et_yoksa_olustur():
@@ -68,32 +90,66 @@ def dosyay_kontrol_et_yoksa_olustur():
     bozuk ya da olmayan durum için dosyayı öntanımlı değerlerle oluşturur"""
     yaz = False
     if os.path.exists("ayarlar.json"):
-        with open("ayarlar.json") as f:
-            try:
-                json.load(f)
-            except ValueError as e:
-                print("Hata: ValueError(" + ",".join(e.args) + ")")
-                os.remove("ayarlar.json")
-                yaz = True
+        try:
+            ayar_oku()
+        except ValueError as e:
+            print("Hata: ValueError(" + ",".join(e.args) + ")")
+            os.remove("ayarlar.json")
+            yaz = True
     else:
         yaz = True
 
     if yaz:
-        with open("ayarlar.json", "w") as f:
-            json.dump({"skorlar": [], "son_kullanan": ""}, f)
+        ayar_yaz({"skorlar": [], "son_kullanan": ""})
+
+
+def ayar_oku():
+    """Ayarlar dosyasını okur"""
+    with open("ayarlar.json") as f:
+        return json.load(f)
+
+
+def ayar_yaz(veri):
+    """Ayarlar dosyasına gönderilen veriyi yazar"""
+    with open("ayarlar.json", "w") as f:
+        json.dump(veri, f)
+
+
+def kullanici_adini_guncelle():
+    """Kullanıcıdan isim alıp ayarlara yazdırmaya gönderir"""
+    veri = ayar_oku()
+    veri["son_kullanan"] = input("Kullanıcı Adınız: ")
+    while not veri["son_kullanan"] or len(veri["son_kullanan"]) < 9:
+        veri["son_kullanan"] = input("1 ile 9 karakter uzunluğunda yazın: ")
+    ayar_yaz(veri)
+
+
+def kullanici_kontrol():
+    """Bir önce giriş yapan kullanıcı ismini gösterip kullanıcıya bu siz misiniz diye sorar"""
+    veri = ayar_oku()
+    print("Son giriş yapan: " + veri["son_kullanan"])
+    if not veri["son_kullanan"]:
+        kullanici_adini_guncelle()
+    elif input("Bu siz misiniz?(e/h) ").lower() == "h":
+        kullanici_adini_guncelle()
 
 
 def main():
     """Programın ana döngüsü, oyunun çalışmasından yükümlü"""
     tekrar_edecek_mi = True
     dosyay_kontrol_et_yoksa_olustur()
+    print("Merhaba, Adam Asmacaya hoşgeldiniz.")
+    print("Yardım: Oyun sırasında quit diyerek çıkabilirsiniz")
+    print("-"*30)
+    skor_tablosunu_goster()
+    kullanici_kontrol()
     while tekrar_edecek_mi:
         oyun_hazirlik()
         oyun_dongusu()
         oyun_sonucu()
-        cevap = input("Devam?(e/h) ")
-        if cevap.lower() == "h":
+        if input("Devam?(e/h) ").lower() == "h":
             tekrar_edecek_mi = False
+    print("Gidiyor gönlümün efendisi...")
 
 
 main()
