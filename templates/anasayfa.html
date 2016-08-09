@@ -1,0 +1,15 @@
+<html>
+<head>
+    <title>
+        Python sınıfı test sayfası
+    </title>
+</head>
+<body>
+    <h1>Merhaba Siteme Hoşgeldiniz</h1><br>
+    Zaman : <i>{{zaman}}</i><br>
+    Bu haftanın şanslısı : <i>
+{%for rakam in kazanan_kupon%}{{rakam}}{%if not loop.last%}-{%endif%}{%endfor%}
+    </i><br>
+    <u>Tekrar Bekleriz</u><br>
+</body>
+</html>
