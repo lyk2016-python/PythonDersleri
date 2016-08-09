@@ -1,3 +1,21 @@
+__all__ = ["Canli",
+           "Bitkiler",
+           "Hayvanlar",
+           "Memeliler",
+           "Yumurtlayanlar",
+           "Kedigiller",
+           "EvKedisi",
+           "PantheraPardusTulliana",
+           "Kopekgiller",
+           "SivasKangal",
+           "Kanis",
+           "Maymungiller",
+           "Orangutan",
+           "Insan",
+           "Egitmen",
+           "HareketliEgitmen",
+           "Kursiyer"]
+
 class Canli:
     """Canlı sınıfı bütün canlı varlıkları kapsar. En ana sınıftır."""
 

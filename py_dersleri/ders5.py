@@ -1,3 +1,5 @@
+__all__ = ["Tarih", "Zaman", "TarihZaman"]
+
 class Tarih:
     """Tarih sınıfı gün ay yıl tutmakla ve işlemekle görevlidir"""
 

@@ -1,7 +1,7 @@
-def lavas(fonksyon):
+def durum(fonksyon):
     """Gelen fonksyonu alıp onun yerine _sarma_islemi fonksyonunu döndürür. Asıl işi _sarma_islemi yapar."""
 
-    def _sarma_islemi(*args, **kwargs):
+    def lavas(*args, **kwargs):
         """Argümanları alır, integer olmayanlara hata verir, etrafını sardığı fonksyonun durumunu ekrana yazar"""
         for a in args:
             if type(a) not in (int, float):
@@ -12,22 +12,22 @@ def lavas(fonksyon):
         print(fonksyon.__code__.co_name + " işlemi bitti, sonucu: " + str(sonuc))
         return sonuc
 
-    return _sarma_islemi
+    return lavas
 
 
-@lavas
+@durum
 def ortalama(*args):
     """Aritmetik ortalama alır"""
     return sum(args) / len(args)
 
 
-@lavas
+@durum
 def toplama(*args):
     """Değerleri toplar"""
     return sum(args)
 
 
-@lavas
+@durum
 def geometrik_ortalama(*args):
     """Geometrik ortalama alır (n1*n2*...nn)**(1/n)"""
     sonuc = 1
