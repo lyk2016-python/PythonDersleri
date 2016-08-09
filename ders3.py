@@ -36,11 +36,12 @@ def geometrik_ortalama(*args):
     return sonuc ** (1 / len(args))
 
 
-ortalama_sonuc = ortalama(4, 8, 15, 16, 23, 42)
-toplama_sonuc = toplama(4, 8, 15, 16, 23, 42)
-geometrik_ortalama_sonuc = geometrik_ortalama(4, 8, 15, 16, 23, 42)
+if __name__ == '__main__':
+    ortalama_sonuc = ortalama(4, 8, 15, 16, 23, 42)
+    toplama_sonuc = toplama(4, 8, 15, 16, 23, 42)
+    geometrik_ortalama_sonuc = geometrik_ortalama(4, 8, 15, 16, 23, 42)
 
-print(ortalama_sonuc)
-print(toplama_sonuc)
-print(geometrik_ortalama_sonuc)
-print(ortalama(4, 8, 15, 16, 23, "a"))
+    print(ortalama_sonuc)
+    print(toplama_sonuc)
+    print(geometrik_ortalama_sonuc)
+    print(ortalama(4, 8, 15, 16, 23, "a"))

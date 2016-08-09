@@ -53,16 +53,17 @@ def reduce(func, liste):
     return sonuc
 
 
-a = map(int, ["1", "2", "3"])
-b = list(eski_map(int, ["1", "2", "3"]))
-xb = list(xmap(int, ["1", "2", "3"]))
+if __name__ == '__main__':
+    a = map(int, ["1", "2", "3"])
+    b = list(eski_map(int, ["1", "2", "3"]))
+    xb = list(xmap(int, ["1", "2", "3"]))
 
-c = filter(None, [1, 2, "osman", None, "veli"])
-d = list(eski_filter(None, [1, 2, "osman", None, "veli"]))
-xd = list(xfilter(None, [1, 2, "osman", None, "veli"]))
+    c = filter(None, [1, 2, "osman", None, "veli"])
+    d = list(eski_filter(None, [1, 2, "osman", None, "veli"]))
+    xd = list(xfilter(None, [1, 2, "osman", None, "veli"]))
 
-e = reduce(lambda x, y: x + y, [1, 2, 3])
-f = eski_reduce(lambda x, y: x + y, [1, 2, 3])
+    e = reduce(lambda x, y: x + y, [1, 2, 3])
+    f = eski_reduce(lambda x, y: x + y, [1, 2, 3])
 
-for i in [a, b, xb, c, d, xd, e, f]:
-    print(i)
+    for i in [a, b, xb, c, d, xd, e, f]:
+        print(i)

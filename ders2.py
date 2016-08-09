@@ -158,4 +158,5 @@ def main():
     cprint("Gidiyor gönlümün efendisi...", color="red", on_color="on_blue")
 
 
-main()
+if __name__ == '__main__':
+    main()

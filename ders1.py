@@ -32,4 +32,7 @@ def makina(para, gida, adet=1, fail_silently=False):
     else:
         return kalan, urunler
 
-kalan_param, gelen_gida = makina(3, "kahve")
+
+if __name__ == '__main__':
+    kalan_param, gelen_gida = makina(3, "kahve")
+    print(kalan_param, gelen_gida)
