@@ -7,7 +7,8 @@ except ImportError:
     def cprint(*args, **kwargs):
         print(*args)
 
-kelimeler = ["vantilatör", "adaptör", "kalem", "fare", "telefon", "kulaklık", "pervane", "merdane", "kestane"]
+kelimeler = ["vantilatör", "adaptör", "kalem", "fare", "telefon", "kulaklık",
+             "pervane", "merdane", "kestane", "şempanze", "battaniye"]
 
 
 def oyun_hazirlik():
