@@ -58,7 +58,7 @@ class Zaman:
     @classmethod
     def from_string(cls, string):
         """Bir stringden Zaman objesi yaratmak için aracı bir method"""
-        degerler = string.split(":").split(".")
+        degerler = string.split(":")
         sayisal_degerler = map(int, degerler)
         return cls(*sayisal_degerler)
 
