@@ -1,0 +1,28 @@
+h1 {
+    text-decoration: underline;
+    color: darkblue;
+}
+
+body {
+    background: lightcyan;
+}
+
+#ilk_i_tagim {
+    color: darkred;
+}
+
+.arkasi_yesil_onu_turuncu {
+    background: darkgreen;
+    color: orange;
+}
+
+.satir_basi {
+    font-weight: bold;
+    background: lightgray;
+    color: darkgrey;
+    text-shadow: black 1px 1px;
+}
+#guidonun_resmi{
+    width: 50px;
+    height: 50px;
+}

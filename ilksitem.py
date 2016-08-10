@@ -15,7 +15,6 @@ def anasayfa():
     for i in range(6):
         rakam = randint(1,49)
         veriler['kazanan_kupon'].append(rakam)
-
     return render_template(
             "anasayfa.html", **veriler)
 

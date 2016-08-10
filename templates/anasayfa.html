@@ -3,13 +3,21 @@
     <title>
         Python sınıfı test sayfası
     </title>
+    <link rel="stylesheet" href="{{url_for("static", filename="css/ana.css")}}">
 </head>
 <body>
     <h1>Merhaba Siteme Hoşgeldiniz</h1><br>
-    Zaman : <i>{{zaman}}</i><br>
-    Bu haftanın şanslısı : <i>
+    <span class="satir_basi">Zaman</span> : <i id="ilk_i_tagim">{{zaman}}</i><br>
+    <span class="satir_basi">Bu haftanın şanslısı</span> : <i>
+        <span class="arkasi_yesil_onu_turuncu">
 {%for rakam in kazanan_kupon%}{{rakam}}{%if not loop.last%}-{%endif%}{%endfor%}
+        </span>
     </i><br>
-    <u>Tekrar Bekleriz</u><br>
+    <u class="arkasi_yesil_onu_turuncu">Tekrar Bekleriz</u><br>
+
+    <h2>Gönlümüzün Efendisi</h2>
+    <img id="guidonun_resmi" src="{{url_for("static", filename="img/GvR.jpg")}}" onclick="tikla_calistir()">
+
 </body>
+    <script src="{{url_for("static", filename="js/ana.js")}}"></script>
 </html>
