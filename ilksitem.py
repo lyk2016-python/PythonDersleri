@@ -5,7 +5,8 @@ kullanici alt dict'inde key kullanıcı adı, value ise sha256 ile şifrelenmiş
 notlar alt dict'inde key kullanıcı adı, value ise kullanıcının girdiği nottur.
 """
 
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, Response
+import werkzeug.exceptions
 from flask_httpauth import HTTPBasicAuth
 from hashlib import sha256
 from datetime import datetime
@@ -43,6 +44,29 @@ def get_pw(username):
 @auth.hash_password
 def hash_pw(password):
     return sha256(password.encode()).hexdigest()
+
+@app.route("/json_deneme")
+def deneme():
+    try:
+        with open('db.json') as f:
+            veriler = json.load(f)
+    except (FileNotFoundError, KeyError, ValueError) as e:
+        print("HATA: " + str(type(e)) + str(e.args))
+        return werkzeug.exceptions.InternalServerError("Veritabanı Bulunamadı")
+
+    return Response(json.dumps(
+            {
+                "kullanicilar": list(veriler["kullanici"].keys()),
+                "not_girmis_kullanicilar":list(
+                                               map(lambda tupl: tupl[0],
+                                                   filter(lambda tupl:tupl[1]!= "",
+                                                          veriler["notlar"].items()
+                                                          )
+                                                   )
+                                               )
+            }
+    ), mimetype="application/json")
+
 
 
 @app.route("/", methods=['GET', 'POST'])
