@@ -15,6 +15,11 @@
     </i><br>
     <u class="arkasi_yesil_onu_turuncu">Tekrar Bekleriz</u><br>
 
+    <form method="post">
+        <textarea name="notlar">{{ notlar }}</textarea>
+        <button type="submit">{% if notlar %}Güncelle{% else %}Kaydet{% endif %}</button>
+    </form>
+
     <h2>Gönlümüzün Efendisi</h2>
     <img id="guidonun_resmi" src="{{url_for("static", filename="img/GvR.jpg")}}" onclick="tikla_calistir()">
 
