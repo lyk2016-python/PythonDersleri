@@ -45,8 +45,19 @@ def get_pw(username):
 def hash_pw(password):
     return sha256(password.encode()).hexdigest()
 
+@app.route("/xml_deneme")
+def xmldeneme():
+    import xml.etree.ElementTree as ET
+    html = ET.Element("html")
+    head = ET.SubElement(html, "head")
+    title = ET.SubElement(head, "title")
+    title.text = "Test"
+    body = ET.SubElement(html,"body")
+    body.text = "abcd"
+    return Response(ET.tostring(html), mimetype="application/xml")
+
 @app.route("/json_deneme")
-def deneme():
+def jsondeneme():
     try:
         with open('db.json') as f:
             veriler = json.load(f)
